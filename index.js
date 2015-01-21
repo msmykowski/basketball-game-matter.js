@@ -4,7 +4,7 @@ var timeClock = document.getElementsByClassName("timeclock")
 scoreBoard[0].innerText = 0
 
 
-// Matter.js module aliases
+
 var Engine = Matter.Engine,
 World = Matter.World,
 Bodies = Matter.Bodies,
@@ -23,7 +23,7 @@ var engine = Engine.create(document.body, {
   }
 });
 
-// add a mouse controlled constraint
+
 var mouseConstraint = MouseConstraint.create(engine);
 
 
@@ -68,7 +68,6 @@ Events.on(engine, 'tick', function(event) {
   }
 });
 
-// add all of the bodies to the world
 
 World.add(engine.world, [ground, mouseConstraint, rock, elastic, cloth, backboard, hoop]);
 
@@ -80,20 +79,21 @@ if (ball.position.x > 618 && ball.position.x < 800 && ball.position.y > 111 && b
 
 function start(time) {
   if (time <= 0) {
-    clearTimeout(timeKeep);
+    timeClock[0].innerText = "Game Over";
     World.clear(engine.world, {keepStatic: true});
+    clearTimeout(timeKeep);
+    console.log(timeClock[0].innerHTML)
   }
   else {
     timeKeep = setTimeout(function() {
       time = time - .01;
-      start(time);
       timeClock[0].innerText = time.toFixed(2);
+      start(time);
     }, 10);
   }
-      timeClock[0].innerText = "Game Over";
 }
 
-start(24.00)
+start(2)
 
 // run the engine
 Engine.run(engine)
