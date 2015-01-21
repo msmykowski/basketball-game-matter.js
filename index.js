@@ -37,12 +37,11 @@ elastic = Constraint.create({
   bodyB: rock,
   stiffness: 0.05,
   render: {
-    lineWidth: 2,
-    strokeStyle: '#dfa417'
+    lineWidth: 0,
   }
 });
 
-var ball = rock
+var ball = []
 
 
 var groupId = Body.nextGroupId(),
@@ -62,7 +61,7 @@ Events.on(engine, 'tick', function(event) {
 
   if (engine.input.mouse.button === -1 && (rock.position.x > 190 || rock.position.y < 330)) {
     rock = Bodies.polygon(170, 350, 20, 35, rockOptions);
-    ball = elastic.bodyB
+    ball.push(elastic.bodyB)
     World.add(engine.world, rock);
     elastic.bodyB = rock;
   }
@@ -73,9 +72,11 @@ Events.on(engine, 'tick', function(event) {
 World.add(engine.world, [ground, mouseConstraint, rock, elastic, cloth, backboard, hoop]);
 
 Events.on(engine, 'tick', function(event) {
-if (ball.position.x > 618 && ball.position.x < 800 && ball.position.y > 111 && ball.position.y < 117) {
-  scoreBoard[0].innerText = parseInt(scoreBoard[0].innerText) + 2
-}});
+  for (var i = 0; i < ball.length; i++) {
+    if (ball[i].position.x > 618 && ball[i].position.x < 820 && ball[i].position.y > 113 && ball[i].position.y < 120) {
+      scoreBoard[0].innerText = parseInt(scoreBoard[0].innerText) + 2
+    }
+  }});
 
 
 function start(time) {
@@ -91,6 +92,7 @@ function start(time) {
     }, 10);
   }
       timeClock[0].innerText = "Game Over";
+
 }
 
 start(24.00)
