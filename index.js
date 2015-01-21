@@ -71,18 +71,24 @@ Events.on(engine, 'tick', function(event) {
 
 World.add(engine.world, [ground, mouseConstraint, rock, elastic, cloth, backboard, hoop]);
 
+var coolDown = 0
+
 Events.on(engine, 'tick', function(event) {
+  coolDown += 1
   for (var i = 0; i < ball.length; i++) {
-    if (ball[i].position.x > 618 && ball[i].position.x < 820 && ball[i].position.y > 113 && ball[i].position.y < 120) {
+    if (ball[i].position.x > 624 && ball[i].position.x < 810 && ball[i].position.y > 125 && ball[i].position.y < 135 && coolDown > 2) {
       scoreBoard[0].innerText = parseInt(scoreBoard[0].innerText) + 2
+      coolDown = 0
     }
-  }});
+  }
+  });
 
 
 function start(time) {
   if (time <= 0) {
     clearTimeout(timeKeep);
     World.clear(engine.world, {keepStatic: true});
+    timeClock[0].innerText = "Game Over";
   }
   else {
     timeKeep = setTimeout(function() {
@@ -91,11 +97,10 @@ function start(time) {
       timeClock[0].innerText = time.toFixed(2);
     }, 10);
   }
-      timeClock[0].innerText = "Game Over";
 
 }
 
-start(24.00)
+start(24)
 
 // run the engine
 Engine.run(engine)
