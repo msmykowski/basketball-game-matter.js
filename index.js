@@ -93,8 +93,8 @@ function start(time) {
   else {
     timeKeep = setTimeout(function() {
       time = time - .01;
-      start(time);
       timeClock[0].innerText = time.toFixed(2);
+      start(time);
     }, 10);
   }
 
